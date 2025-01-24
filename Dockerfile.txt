@@ -8,7 +8,11 @@ WORKDIR /app
 COPY notebooks/medallion_architecture_airbnb.ipynb /app/
 COPY datasets/ /app/datasets/
 
-# Install additional Python dependencies if needed
+# Verificar que los archivos se copiaron correctamente
+RUN ls -alh /app
+RUN ls -alh /app/datasets
+
+# Install additional Python dependencies (including Jupyter)
 RUN pip install --no-cache-dir pyspark pandas matplotlib jupyter
 
 # Default command to run Jupyter Notebook
