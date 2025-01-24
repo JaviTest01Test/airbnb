@@ -1,0 +1,15 @@
+# Use an official Spark base image
+FROM bitnami/spark:latest
+
+# Set the working directory inside the image
+WORKDIR /app
+
+# Copy the notebook and datasets from your specific location into the image
+COPY notebooks/medallion_architecture_airbnb.ipynb /app/
+COPY datasets/ /app/datasets/
+
+# Install additional Python dependencies if needed
+RUN pip install --no-cache-dir pyspark pandas matplotlib
+
+# Default command to run Jupyter Notebook
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--allow-root"]
