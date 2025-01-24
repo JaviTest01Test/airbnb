@@ -9,7 +9,7 @@ COPY notebooks/medallion_architecture_airbnb.ipynb /app/
 COPY datasets/ /app/datasets/
 
 # Install additional Python dependencies if needed
-RUN pip install --no-cache-dir pyspark pandas matplotlib
+RUN pip install --no-cache-dir pyspark pandas matplotlib jupyter
 
 # Default command to run Jupyter Notebook
 CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--allow-root"]
