@@ -1,4 +1,4 @@
-# Use the Jupyter Spark Notebook base image
+# Use the Bitnami Jupyter base notebook image
 FROM bitnami/jupyter-base-notebook:4.1.6
 
 # Set the working directory inside the image
@@ -13,4 +13,4 @@ COPY datasets/ /app/datasets/
 RUN pip install --no-cache-dir pyspark pandas matplotlib
 
 # Default command to run Jupyter Notebook
-CMD ["start-notebook.sh", "--NotebookApp.ip='*'", "--NotebookApp.port=8888", "--NotebookApp.allow_origin='*'", "--NotebookApp.token=''"]
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''"]
