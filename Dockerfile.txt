@@ -7,6 +7,7 @@ WORKDIR /airbnb_project
 # Copy the notebook and datasets from your specific location into the image
 COPY notebooks/medallion_architecture_airbnb.ipynb /airbnb_project/notebooks/
 COPY datasets/ /airbnb_project/datasets/
+COPY src/ /airbnb_project/src/
 
 # No need to install Jupyter as it is already installed in this image
 # Install additional Python dependencies
