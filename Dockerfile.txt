@@ -5,9 +5,9 @@ FROM bitnami/jupyter-base-notebook:4.1.6
 WORKDIR /airbnb_project
 
 # Copy the notebook and datasets from your specific location into the image
-COPY notebooks/medallion_architecture_airbnb.ipynb /airbnb_project/notebooks/:rw
-COPY datasets/ /airbnb_project/datasets/:rw
-COPY src/ /airbnb_project/src/:rw
+COPY notebooks/medallion_architecture_airbnb.ipynb /airbnb_project/notebooks:rw
+COPY datasets/ /airbnb_project/datasets:rw
+COPY src/ /airbnb_project/src:rw
 
 # No need to install Jupyter as it is already installed in this image
 # Install additional Python dependencies
