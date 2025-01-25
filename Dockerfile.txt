@@ -1,0 +1,39 @@
+# Use the Bitnami Jupyter base notebook image
+FROM bitnami/jupyter-base-notebook:4.1.6
+
+# Set the working directory inside the image
+WORKDIR /airbnb_project
+
+# Install Java (required for Spark)
+USER root
+RUN apt-get update && apt-get install -y openjdk-11-jdk \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set environment variables for Java and Spark
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV PATH="$JAVA_HOME/bin:$PATH"
+
+# Install Spark
+ARG SPARK_VERSION=3.3.2
+ARG HADOOP_VERSION=3
+RUN wget https://downloads.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
+    tar -xvzf spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
+    mv spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} /opt/spark && \
+    rm spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
+ENV SPARK_HOME=/opt/spark
+ENV PATH="$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH"
+
+# Copy your notebook, datasets, and source code into the image
+COPY notebooks/ /airbnb_project/notebooks/
+COPY datasets/ /airbnb_project/datasets/
+COPY src/ /airbnb_project/src/
+
+# Install additional Python dependencies
+RUN pip install --no-cache-dir pyspark pandas matplotlib
+
+# Expose Jupyter Notebook port
+EXPOSE 8888
+
+# Default command to run Jupyter Notebook
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--NotebookApp.token=''"]
