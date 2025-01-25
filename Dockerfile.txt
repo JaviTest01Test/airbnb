@@ -1,6 +1,9 @@
 # Use the Bitnami Jupyter base notebook image
 FROM jupyter/pyspark-notebook:x86_64-spark-3.5.0
 
+# Install Papermill and any other dependencies (e.g., Jupyter)
+RUN pip install papermill
+
 # Set the working directory inside the image
 WORKDIR /airbnb_project
 
